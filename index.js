@@ -6,6 +6,11 @@ const contactList = [
         firstname: 'Loïc',
         lastname: 'Dupont',
         age: 23
+    },
+    {
+        firstname: 'Matthieu',
+        lastname: 'Durand',
+        age: 23
     }
 ]
 
