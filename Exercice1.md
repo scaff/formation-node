@@ -1,7 +1,7 @@
 # Développer une API qui serve une application de gestion de contact
 Développez une route
-- pour récupérer tous les contacts
-- pour afficher une fiche contact complète
+- [x] pour récupérer tous les contacts
+- [x] pour afficher une fiche contact complète
 - pour ajouter un contact
 - pour modifier un contact
 - pour supprimer un contact
