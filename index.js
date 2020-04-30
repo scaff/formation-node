@@ -14,6 +14,8 @@ let contactList = [
     }
 ]
 
+app.use(express.json())
+
 app.get('/contacts', function (req, res) {
     return res.json(contactList)
 })
@@ -37,6 +39,13 @@ app.delete('/contacts/:id', function (req, res) {
     }
 
     contactList = contactList.splice(index - 1, 1)
+    return res.json(contactList)
+})
+
+app.post('/contacts', function (req, res) {
+    const newContact = req.body
+    contactList.push(newContact)
+
     return res.json(contactList)
 })
 

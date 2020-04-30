@@ -2,9 +2,9 @@
 Développez une route
 - [x] pour récupérer tous les contacts
 - [x] pour afficher une fiche contact complète
-- pour ajouter un contact
+- [x] pour ajouter un contact
 - pour modifier un contact
-- pour supprimer un contact
+- [x] pour supprimer un contact
 
 ## Hints : Les difficultés à prévoir
 - Pensez à utiliser un body-parser pour pouvoir récupérer du JSON
