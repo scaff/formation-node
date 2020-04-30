@@ -14,12 +14,8 @@ const contactList = [
     }
 ]
 
-app.get('/toto', function (req, res) {
-    res.send('Hello world avec /toto !')
-})
-
-app.post('/toto', function (req, res) {
-    res.send('POST /toto')
+app.get('/contacts', function (req, res) {
+    return res.json(contactList)
 })
 
 app.listen(3000, function (){
