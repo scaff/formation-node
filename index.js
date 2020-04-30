@@ -49,6 +49,21 @@ app.post('/contacts', function (req, res) {
     return res.json(contactList)
 })
 
+app.patch('/contacts/:id', function (req, res) {
+    const index = parseInt(req.params.id)
+    if (index > contactList.length - 1 || index < 0) {
+        return res.status(404).json({
+            status: 404
+        })
+    }
+
+    const newContact = req.body
+    
+    contactList[index] = Object.assign(contactList[index], newContact)
+
+    return res.json(contactList[index])
+})
+
 app.listen(3000, function (){
     console.log('Ecoute sur le port 3000')
 })
