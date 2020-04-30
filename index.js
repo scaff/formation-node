@@ -16,28 +16,25 @@ let contactList = [
 
 app.use(express.json())
 
+function checkIdExistence (req, res, next) {
+    const index = parseInt(req.params.id)
+    if (index > contactList.length - 1 || index < 0) {
+        return res.status(404).json({
+            status: 404
+        })
+    }
+    next()
+}
+
 app.get('/contacts', function (req, res) {
     return res.json(contactList)
 })
 
-app.get('/contacts/:id', function (req, res) {
-    const index = parseInt(req.params.id)
-    if (index > contactList.length - 1 || index < 0) {
-        return res.status(404).json({
-            status: 404
-        })
-    }
+app.get('/contacts/:id', checkIdExistence, function (req, res) {
     return res.json(contactList[index])
 })
 
-app.delete('/contacts/:id', function (req, res) {
-    const index = parseInt(req.params.id)
-    if (index > contactList.length - 1 || index < 0) {
-        return res.status(404).json({
-            status: 404
-        })
-    }
-
+app.delete('/contacts/:id', checkIdExistence, function (req, res) {
     contactList = contactList.splice(index - 1, 1)
     return res.json(contactList)
 })
@@ -49,14 +46,7 @@ app.post('/contacts', function (req, res) {
     return res.json(contactList)
 })
 
-app.patch('/contacts/:id', function (req, res) {
-    const index = parseInt(req.params.id)
-    if (index > contactList.length - 1 || index < 0) {
-        return res.status(404).json({
-            status: 404
-        })
-    }
-
+app.patch('/contacts/:id', checkIdExistence, function (req, res) {
     const newContact = req.body
     
     contactList[index] = Object.assign(contactList[index], newContact)
