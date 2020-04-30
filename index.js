@@ -31,6 +31,7 @@ app.get('/contacts', function (req, res) {
 })
 
 app.get('/contacts/:id', checkIdExistence, function (req, res) {
+    const index = parseInt(req.params.id)
     return res.json(contactList[index])
 })
 
@@ -49,6 +50,7 @@ app.post('/contacts', function (req, res) {
 app.patch('/contacts/:id', checkIdExistence, function (req, res) {
     const newContact = req.body
     
+    const index = parseInt(req.params.id)
     contactList[index] = Object.assign(contactList[index], newContact)
 
     return res.json(contactList[index])
