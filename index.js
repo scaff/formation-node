@@ -24,12 +24,42 @@ function checkIdExistence (req, res, next) {
     next()
 }
 
+app.get('/adults', function (req, res) {
+    contactModel.find({ age: { $gte: 18 } }, function (err, adultList) {
+        if (err) return console.log(err)
+        return res.json(adultList)
+    })
+})
+
 app.get('/contacts', function (req, res) {
     contactModel.find(function(err, contactList) {
         if (err) return console.log(err)
         console.log('tout va bien')
         return res.json(contactList)
     })
+})
+
+app.get('/contacts/average_age', function (req, res) {
+    contactModel.aggregate([
+        {
+            $group: {
+                _id: null,
+                averageAge: { $avg: '$age' }
+            }
+        }
+    ], function (err, monResultat) {
+        if (err) return console.log(err)
+        const { averageAge } = monResultat[0]
+        // équivaut à
+        // const averageAge = monResultat.averageAge
+
+        return res.json({ averageAge })
+        // équivaut à        nom de clé: valeur
+        // return res.json({ averageAge: averageAge })
+        // utilisable uniquement quand le nom de clé et le nom de
+        // variable qui contient la valeur sont identiques
+    })
+
 })
 
 app.get('/contacts/:id', checkIdExistence, function (req, res) {
