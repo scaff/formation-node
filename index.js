@@ -56,17 +56,18 @@ app.post('/contacts', function (req, res) {
 app.patch('/contacts/:id', checkIdExistence, function (req, res) {
     const newContact = req.body
     
-    const index = parseInt(req.params.id)
-    contactList[index] = Object.assign(contactList[index], newContact)
-
-    return res.json(contactList[index])
+    const index = req.params.id
+    contactModel.updateOne({ _id: index }, newContact, function(err, editedContact) {
+        if (err) return console.log(err)
+        return res.json(editedContact)
+    })
 })
 
 app.listen(3000, function (){
     console.log('Ecoute sur le port 3000')
 })
 
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function() {
