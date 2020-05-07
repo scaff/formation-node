@@ -17,8 +17,22 @@ function checkIdExistence (req, res, next) {
 contact.get('/', function (req, res) {
     contactModel.find(function(err, contactList) {
         if (err) return console.log(err)
-        console.log('tout va bien')
+        console.log('tout va bien', contactList)
         return res.json(contactList)
+    })
+})
+
+contact.delete('/', function (req, res) {
+    const ids = Object.values(JSON.parse(req.query.id))
+    delete ids[ids.length - 1]
+    delete ids[ids.length - 2]
+    contactModel.deleteMany({
+        _id: {
+            $in: ids
+        }
+    }, function (err, result) {
+        if (err) return console.log(err)
+        return res.json(result)
     })
 })
 
@@ -59,8 +73,9 @@ contact.get('/:id', checkIdExistence, function (req, res) {
 })
 
 contact.delete('/:id', checkIdExistence, function (req, res) {
-    contactList = contactList.splice(index - 1, 1)
-    return res.json(contactList)
+    contactModel.deleteOne({ _id: req.params.id }, function (err, contactList) {
+        return res.json(contactList)
+    })
 })
 
 contact.post('/', function (req, res) {
